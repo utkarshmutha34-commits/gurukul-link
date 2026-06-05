@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="mr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>प्रवेश अर्ज - पुनरुत्थान समरसता गुरुकुलम</title>
+    <style>
+        /* Reset and Base Styles - FIXED */
+        * {
+            box-sizing: border-box;
+            overflow-x: hidden;
+            /* Prevents horizontal scroll */
+        }
+
+        .top-image {
+            width: calc(100% + 30px);
+            margin-top: -15px;
+            margin-left: -15px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .top-image img {
+            width: 100%;
+            max-height: 180px;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* PRINT FIX - IMAGE MUST SHOW */
+        @media print {
+            .top-image img {
+                display: block !important;
+                width: 100% !important;
+                max-height: none !important;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            overflow-x: hidden;
+
+            html,
+            body {
+                width: 100%;
+                max-width: 100%;
+                overflow-x: hidden;
+                /* Critical fix */
+                margin: 0;
+                padding: 0;
+            }
+
+            body {
+                font-family: 'Times New Roman', serif;
+                line-height: 1.6;
+                margin: 0 auto;
+                padding: 15px;
+                max-width: 800px;
+                width: 100%;
+                border: 1px solid #ccc;
+                min-height: 100vh;
+                box-sizing: border-box;
+            }
+
+            /* Fix the problematic margin-right */
+            .photo-section {
+                display: flex;
+                flex-direction: column-reverse;
+                /* Photo goes below on mobile */
+                gap: 15px;
+            }
+
+            .photo-wrapper {
+                order: 2;
+            }
+
+            .form-wrapper {
+                order: 1;
+                margin-right: 0 !important;
+                /* Remove fixed margin */
+            }
+
+            /* Header - Fixed */
+            .header {
+                text-align: center;
+                border-bottom: 2px solid #000;
+                padding-bottom: 10px;
+                margin-bottom: 20px;
+                overflow: hidden;
+            }
+
+            .header h2 {
+                margin: 0;
+                font-size: clamp(18px, 5vw, 24px);
+            }
+
+            .header p {
+                margin: 5px 0 0;
+                font-size: clamp(11px, 3vw, 14px);
+                word-break: break-word;
+            }
+
+            .contact {
+                text-align: right;
+                font-size: clamp(10px, 2.5vw, 12px);
+                margin-top: 5px;
+            }
+
+            /* Field Rows - PERFECT MOBILE */
+            .field-row {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: flex-end;
+                gap: 6px;
+                margin-bottom: 8px;
+                width: 100%;
+            }
+
+            .field-label {
+                font-size: clamp(12px, 2.8vw, 15px);
+                flex-shrink: 0;
+                min-width: 0;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                padding-right: 4px;
+                flex: 0 0 auto;
+            }
+
+            .input-line {
+                flex: 1;
+                min-width: 80px;
+                border: none;
+                border-bottom: 1px dashed #000;
+                padding: 4px 2px;
+                outline: none;
+                font-size: clamp(12px, 2.8vw, 15px);
+                background: transparent;
+                max-width: 100%;
+            }
+
+            .small-line {
+                flex: 0 0 clamp(70px, 18vw, 120px);
+                max-width: 150px;
+            }
+
+            /* Photo Container - NO OVERFLOW */
+            .photo-container {
+                float: right;
+                width: 140px;
+                height: 180px;
+                margin-left: 20px;
+            }
+
+            .photo-box {
+                width: 100%;
+                height: clamp(110px, 22vw, 150px);
+                border: 1px solid #000;
+                text-align: center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: clamp(9px, 2.2vw, 12px);
+                overflow: hidden;
+            }
+
+            .photo-preview {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+
+            /* Multi layouts */
+            .item-3-half {
+                flex: 0 0 calc(50% - 3px);
+            }
+
+            .item-4-row {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px;
+                width: 100%;
+            }
+
+            .item-4-row .field-row {
+                flex: 1 1 calc(48% - 3px);
+                min-width: 180px;
+            }
+
+            /* Long textarea */
+            .long-textarea {
+                flex: 1;
+                border: 1px dashed #000;
+                width: 100% !important;
+                min-height: 55px;
+                padding: 6px;
+                resize: vertical;
+                font-size: clamp(12px, 2.8vw, 15px);
+                margin-top: 4px;
+                box-sizing: border-box;
+            }
+
+            /* Signatures */
+            .signature-box {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                margin-top: clamp(30px, 10vh, 50px);
+                gap: 15px;
+            }
+
+            .signature-item {
+                flex: 1;
+                min-width: 130px;
+                text-align: center;
+            }
+
+            .signature-line {
+                border-top: 1px dashed #000;
+                padding-top: 5px;
+            }
+
+            /* Document list */
+            .document-list {
+                margin-top: 10px;
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+            }
+
+            /* Disclaimer */
+            .disclaimer {
+                font-size: clamp(11px, 2.8vw, 14px);
+                margin: 20px 0;
+                text-align: center;
+                font-weight: bold;
+                border-top: 1px solid #000;
+                padding-top: 10px;
+            }
+
+            /* MOBILE SPECIFIC - NO WHITE SPACE */
+            @media (max-width: 768px) {
+                body {
+                    padding: 12px !important;
+                    border-radius: 0;
+                    border: 1px solid #ccc;
+                }
+
+                .field-row {
+                    flex-direction: column !important;
+                    align-items: stretch !important;
+                    gap: 3px !important;
+                }
+
+                .field-label {
+                    white-space: normal !important;
+                    padding-right: 0 !important;
+                    margin-bottom: 2px;
+                    font-weight: 600;
+                }
+
+                .input-line,
+                .small-line {
+                    flex: 1 !important;
+                    min-width: 100% !important;
+                    max-width: 100% !important;
+                }
+
+                .photo-container {
+                    width: clamp(90px, 35vw, 120px) !important;
+                    margin: 0 auto 12px !important;
+                }
+
+                .signature-box {
+                    flex-direction: column;
+                    gap: 12px;
+                }
+
+                .signature-item {
+                    min-width: 100% !important;
+                }
+
+                .item-4-row .field-row {
+                    flex: 1 1 100% !important;
+                }
+
+                /* Remove ALL problematic margins */
+                div[style*="margin-right"] {
+                    margin-right: 0 !important;
+                }
+            }
+
+            @media (max-width: 480px) {
+                body {
+                    padding: 8px !important;
+                }
+
+                .header p {
+                    font-size: 11px !important;
+                }
+            }
+
+            /* PRINT - Perfect */
+            @media print {
+                * {
+                    overflow: visible !important;
+                }
+
+                body {
+                    border: none;
+                    margin: 0;
+                    padding: 10px;
+                    max-width: none;
+                    width: auto;
+                }
+
+                .input-line,
+                .long-textarea {
+                    border-bottom: 1px solid #000 !important;
+                    border: 1px solid #000 !important;
+                    background-color: #f7f7f7 !important;
+                    -webkit-print-color-adjust: exact;
+                    print-color-adjust: exact;
+                }
+
+                .photo-upload-area,
+                .signature-upload-container input[type="file"] {
+                    display: none !important;
+                }
+
+                .field-row {
+                    flex-wrap: nowrap !important;
+                }
+
+                .photo-container {
+                    float: right !important;
+                    margin-left: 15px !important;
+                    width: 140px !important;
+                }
+            }
+
+            .clearfix::after {
+                content: "";
+                clear: both;
+                display: table;
+            }
+
+            /* Mobile white space fix */
+            @media (max-width: 768px) {
+                .clearfix {
+                    display: block;
+                }
+
+                .photo-container {
+                    float: none;
+                    margin-left: 0;
+                    margin: 0 auto 15px;
+                    display: block;
+                    width: clamp(100px, 25vw, 140px);
+                }
+
+                div[style*="margin-right"] {
+                    margin-right: 0 !important;
+                }
+            }
+
+            /* COMPACT SIGNATURE FIX */
+            .signature-upload-container {
+                margin-top: 2px !important;
+            }
+
+            .signature-upload-container input[type="file"] {
+                font-size: 11px !important;
+                height: 18px !important;
+                margin: 0 !important;
+                line-height: 12px !important;
+                display: block;
+                width: 100%;
+            }
+
+            /* Smaller signature preview */
+            .signature-preview {
+                max-height: 25px !important;
+                max-width: 80px !important;
+            }
+
+            /* Compact signature item */
+            .signature-item {
+                min-width: 100px !important;
+                padding: 0 5px;
+            }
+
+            /* Mobile - Even more compact */
+            @media (max-width: 768px) {
+                .signature-upload-container input[type="file"] {
+                    font-size: 7px !important;
+                    height: 16px !important;
+                }
+
+                .signature-item {
+                    min-width: 90px !important;
+                }
+            }
+
+            /* Print - Hide completely */
+            @media print {
+                .signature-upload-container {
+                    display: none !important;
+                }
+            }
+        }
+    </style>
+
+    <script>
+        // १. इमेज प्रिव्यू के लिए फंक्शन
+        function previewImage(event, previewId, placeholderId) {
+            const file = event.target.files[0];
+            const preview = document.getElementById(previewId);
+            const placeholderText = document.getElementById(placeholderId);
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                    if (placeholderText) {
+                        placeholderText.style.display = 'none';
+                    }
+                }
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = '';
+                preview.style.display = 'none';
+                if (placeholderText) {
+                    placeholderText.style.display = 'block';
+                }
+            }
+        }
+
+        // २. फाइल अपलोड बॉक्स दिखाने/छुपाने के लिए फंक्शन (अब यह बाहर है)
+        function toggleFileUpload(selectElement, uploadDivId) {
+            const uploadDiv = document.getElementById(uploadDivId);
+            if (selectElement.value === "होय") {
+                uploadDiv.style.display = 'block';
+            } else {
+                uploadDiv.style.display = 'none';
+                // अगर छुपाया है, तो सिलेक्ट की गई फाइल भी हटा दें
+                const fileInput = uploadDiv.querySelector('input[type="file"]');
+                if (fileInput) fileInput.value = "";
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <form action="submit.php" method="post" enctype="multipart/form-data">
+        <div class="top-image">
+            <img src="http://gurukulschool.wuaze.com/gurukul/gurukul.png" alt="Top Banner">
+        </div>
+
+        <div class="header">
+            <div style="float:left; margin-right: 15px;"></div>
+            <div style="clear:both;"></div>
+        </div>
+
+        <div class="clearfix">
+            <div class="photo-container">
+                <div class="photo-box">
+                    <img id="photo-preview-image" class="photo-preview" src="" style="display:none;">
+                    <span id="photo-placeholder-text">विद्यार्थ्याचे छायाचित्र</span>
+                </div>
+                <div class="photo-upload-area">
+                    <input type="file" name="student_photo" accept="image/*"
+                        onchange="previewImage(event, 'photo-preview-image', 'photo-placeholder-text')"
+                        style="font-size: 10px;">
+                </div>
+            </div>
+            <div style="margin-right: 160px;">
+                <div class="field-row">
+                    <div class="field-label">जावक क्र. :</div>
+                    <input type="text" class="input-line small-line" name="outward_number">
+                    <span class="application-title" style="margin: 0 20px;">प्रवेश अर्ज</span>
+                    <div class="field-label">दि.</div>
+                    <input type="date" class="input-line small-line" style="width: 100px;" name="application_date">
+                </div>
+            </div>
+        </div>
+        <div style="margin-top: 10px;">
+            <div class="field-row">
+                <div class="field-label">मा. प्रशासनाचार्य, पुनरुत्थान समरसता गुरुकुलम ,चिंचवडगांव पुणे - ३३.</div>
+            </div>
+
+            <div class="field-row">
+                <div class="field-label">विषय - पुनरुत्थान समरसता गुरुकुलम मध्ये प्रवेश मिळणे बाबत.</div>
+            </div>
+
+            <div class="section">
+                <div class="field-row">
+                    <div class="field-label">आपल्या गुरुकूलाची माहिती आम्ही समजून घेतली असून आमचा/ आमची मुलगा / मुलगी /
+                        पाल्य</div>
+                </div>
+                <div class="field-row">
+                    <div class="field-label">याला / हिला आपल्या गुरुकुलात इयत्ता.</div>
+                    <input type="number" class="input-line small-line" style="width: 50px;" name="academic_class">
+                    <div class="field-label">मध्ये शैक्षणिक वर्ष</div>
+                    <input type="text" class="input-line small-line" style="width: 100px;" name="academic_year">
+                    <div class="field-label">मध्ये प्रवेश</div>
+                </div>
+                <div class="field-row">
+                    <div class="field-label">द‌यावा ही विनंती. त्याची / तिची माहिती खालीलप्रमाणे :</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="field-row">
+                    <div class="field-label">१) विद्यार्थ्यांचे संपूर्ण नाव (आडनाव प्रथम) :</div>
+                    <input type="text" class="input-line" name="student_full_name">
+                </div>
+                <div class="field-row">
+                    <div class="field-label">२) वडिलांचे / पालकाचे पूर्ण नाव :</div>
+                    <input type="text" class="input-line" name="father_full_name">
+                </div>
+                <div class="field-row">
+                    <div class="field-label">३) आईचे नाव :</div>
+                    <input type="text" class="input-line item-3-half" name="mother_name">
+                    <div class="field-label">धर्म/जात :</div>
+                    <input type="text" class="input-line small-line" name="religion_cast">
+                    <div class="field-label">मातृभाषा :</div>
+                    <select name="mother_tongue" class="input-line small-line">
+                        <option value="मराठी">मराठी</option>
+                        <option value="वाघरी">वाघरी</option>
+                    </select>
+                </div>
+                <div class="item-4-row">
+                    <div class="field-row">
+                        <div class="field-label">४) जन्मदिनांक :</div>
+                        <input type="date" class="input-line small-line" name="dob">
+                        <div class="field-label">जन्मठिकाण :</div>
+                        <input type="text" class="input-line small-line" name="birth_place">
+                    </div>
+                </div>
+                <div class="field-row">
+                    <div class="field-label">५) पत्ता : १) सध्याचा :</div>
+                    <input type="text" class="input-line" name="current_address">
+                </div>
+                <div class="field-row">
+                    <div class="field-label"> २) कायमचा (गावकडचा):</div>
+                    <input type="text" class="input-line" style="margin-left: 20px;" name="permanent_address">
+                </div>
+            </div>
+            <div class="field-row" style="flex-direction: column; align-items: flex-start;">
+                <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px; width: 100%;">
+                    <div class="field-label">६) आधारकार्ड काढले आहे का ?</div>
+                    <select name="aadhar_available" class="input-line small-line"
+                        onchange="toggleFileUpload(this, 'upload_aadhar')">
+                        <option value="नाही">नाही</option>
+                        <option value="होय">होय</option>
+                    </select>
+                    <div class="field-label">आधारकार्ड नं. :</div>
+                    <input type="text" class="input-line" style="width: 200px;" name="aadhar_number">
+                </div>
+                <div id="upload_aadhar" style="display: none; margin-top: 5px; margin-left: 20px;">
+                    <input type="file" name="file_aadhar" accept="image/*,.pdf">
+                </div>
+            </div>
+            <div class="field-row">
+                <div class="field-label">७) मोबाईल नं. : १)</div>
+                <input type="text" class="input-line item-3-half" name="mobile1">
+                <div class="field-label">२)</div>
+                <input type="text" class="input-line item-3-half" name="mobile2">
+            </div>
+            <div class="field-row">
+                <div class="field-label">८) या पूर्वीच्या शाळेचा यु-डायस क्रमांक :</div>
+                <input type="text" class="input-line item-3-half" name="udisecode">
+            </div>
+            <div class="field-row">
+                <div class="field-label">९) स्टुडंट आयडी :</div>
+                <input type="text" class="input-line item-3-half" name="student_id">
+            </div>
+        </div>
+
+        <div style="page-break-after: always;"></div>
+
+        <div class="section">
+            <div class="field-row">
+                <div class="field-label">१०) या पूर्वीच्या शाळेचे नाव व पत्ता :</div>
+                <input type="text" class="input-line" name="prev_school_name_address">
+            </div>
+            <div class="field-row">
+                <div class="field-label">११) वय :</div>
+                <input type="number" class="input-line small-line" style="width: 50px;" name="age">
+                <div class="field-label">वजन :</div>
+                <input type="text" class="input-line small-line" style="width: 50px;" name="weight">
+                <div class="field-label">उंची :</div>
+                <input type="text" class="input-line small-line" style="width: 50px;" name="height">
+            </div>
+            <div class="field-row">
+                <div class="field-label">१२) विशेष आवड :</div>
+                <input type="text" class="input-line" name="special_innterest">
+            </div>
+            <div class="field-row">
+                <div class="field-label">१३) सवयी :</div>
+                <input type="text" class="input-line" name="habits">
+            </div>
+            <div class="field-row">
+                <div class="field-label">१४) आई-वडिलांना असलेले अनुवांशिक आजार :</div>
+                <input type="text" class="input-line" name="parents_diseases">
+            </div>
+            <div class="field-row">
+                <div class="field-label">१५) विद्यार्थ्याला जन्मापासून झालेले आजार :</div>
+                <input type="text" class="input-line" name="student_diseases">
+            </div>
+            <div class="field-row" style="align-items: flex-start;">
+                <div class="field-label">१६) आपणास ओळखणाऱ्या व्यक्तीचे नाव व पत्ता १) :</div>
+                <textarea class="long-textarea" style="height: 40px; border-bottom: 1px dashed #000;"
+                    name="known_person1"></textarea>
+            </div>
+            <div class="field-row">
+                <div class="field-label" style="margin-top: 10px;">२) :</div>
+                <textarea class="long-textarea" style="height: 40px; border-bottom: 1px dashed #000;"
+                    name="known_person2"></textarea>
+            </div>
+            <div class="field-row">
+                <div class="field-label">१७) अन्य विशेष माहिती :</div>
+                <input type="text" class="input-line" name="other_info">
+            </div>
+
+            <div class="field-row">
+                <div class="field-label">१८) प्रवर्ग : अनुसूचित जाती / अनु.जमाती / भटके विमुक्त. अ / ब / क / ड, इतर
+                    मागास /
+                    खुला वर्ग :</div>
+                <input type="text" class="input-line" name="category">
+            </div>
+            <div class="field-row" style="flex-direction: column; align-items: flex-start;">
+                <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px; width: 100%;">
+                    <div class="field-label">१९) अन्य नातेवाईकांकडे जातीचे प्रमाणपत्र आहे का ?</div>
+                    <select name="relative_certificate" class="input-line small-line"
+                        onchange="toggleFileUpload(this, 'upload_relative_caste')">
+                        <option value="नाही">नाही</option>
+                        <option value="होय">होय</option>
+                    </select>
+                    <div class="field-label">असल्यास तपशील :</div>
+                    <input type="text" class="input-line small-line" name="relative_details">
+                </div>
+                <div id="upload_relative_caste" style="display: none; margin-top: 5px; margin-left: 20px;">
+                    <input type="file" name="file_relative_caste" accept="image/*,.pdf">
+                </div>
+            </div>
+            <div class="field-row">
+                <div class="field-label">२०) वडिलांचा / आईचा व्यवसाय :</div>
+                <input type="text" class="input-line" name="parents_occupation">
+            </div>
+            <div class="field-row">
+                <div class="field-label">२१) आईच्या माहेरचे नाव पत्ता :</div>
+                <input type="text" class="input-line" name="mother_maher_details">
+            </div>
+        </div>
+        <div class="section">
+            <div class="field-row">
+                <div class="field-label">२२) सोबत जोडलेली कागदपत्रे :</div>
+            </div>
+            <div class="document-list">
+
+                <div class="field-row" style="flex-direction: column; align-items: flex-start;">
+                    <div style="display: flex; align-items: center; gap: 10px; width: 100%;">
+                        <div class="field-label">१) जन्मचा दाखला :</div>
+                        <select name="status_birth_cert" class="input-line small-line"
+                            onchange="toggleFileUpload(this, 'upload_birth_cert')">
+                            <option value="नाही">नाही</option>
+                            <option value="होय">होय</option>
+                        </select>
+                    </div>
+                    <div id="upload_birth_cert" style="display: none; margin-top: 5px; margin-left: 20px;">
+                        <input type="file" name="file_birth_cert" accept="image/*,.pdf">
+                    </div>
+                </div>
+
+                <div class="field-row" style="flex-direction: column; align-items: flex-start;">
+                    <div style="display: flex; align-items: center; gap: 10px; width: 100%;">
+                        <div class="field-label">२) जातीचा दाखला :</div>
+                        <select name="status_caste_cert" class="input-line small-line"
+                            onchange="toggleFileUpload(this, 'upload_caste_cert')">
+                            <option value="नाही">नाही</option>
+                            <option value="होय">होय</option>
+                        </select>
+                    </div>
+                    <div id="upload_caste_cert" style="display: none; margin-top: 5px; margin-left: 20px;">
+                        <input type="file" name="file_caste_cert" accept="image/*,.pdf">
+                    </div>
+                </div>
+
+                <div class="field-row" style="flex-direction: column; align-items: flex-start;">
+                    <div style="display: flex; align-items: center; gap: 10px; width: 100%;">
+                        <div class="field-label">३) शाळा सोडल्याचा दाखला :</div>
+                        <select name="status_lc" class="input-line small-line"
+                            onchange="toggleFileUpload(this, 'upload_lc')">
+                            <option value="नाही">नाही</option>
+                            <option value="होय">होय</option>
+                        </select>
+                    </div>
+                    <div id="upload_lc" style="display: none; margin-top: 5px; margin-left: 20px;">
+                        <input type="file" name="file_lc" accept="image/*,.pdf">
+                    </div>
+                </div>
+
+                <div class="field-row" style="flex-direction: column; align-items: flex-start;">
+                    <div style="display: flex; align-items: center; gap: 10px; width: 100%;">
+                        <div class="field-label">४) गुणपत्रक :</div>
+                        <select name="status_marksheet" class="input-line small-line"
+                            onchange="toggleFileUpload(this, 'upload_marksheet')">
+                            <option value="नाही">नाही</option>
+                            <option value="होय">होय</option>
+                        </select>
+                    </div>
+                    <div id="upload_marksheet" style="display: none; margin-top: 5px; margin-left: 20px;">
+                        <input type="file" name="file_marksheet" accept="image/*,.pdf">
+                    </div>
+                </div>
+
+                <div class="field-row" style="flex-direction: column; align-items: flex-start;">
+                    <div style="display: flex; align-items: center; gap: 10px; width: 100%;">
+                        <div class="field-label">५) इतर :</div>
+                        <select name="status_other" class="input-line small-line"
+                            onchange="toggleFileUpload(this, 'upload_other')">
+                            <option value="नाही">नाही</option>
+                            <option value="होय">होय</option>
+                        </select>
+                    </div>
+                    <div id="upload_other" style="display: none; margin-top: 5px; margin-left: 20px;">
+                        <input type="text" placeholder="कागदपत्राचे नाव" class="input-line"
+                            style="margin-bottom: 5px;"><br>
+                        <input type="file" name="file_other" accept="image/*,.pdf">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div style="page-break-after: always;"></div>
+
+        <div class="section">
+            <div class="disclaimer">
+                विद्यार्थ्याला सुट्टी फक्त दिवाळीत व उन्हाळ्यात मिळेल.
+            </div>
+            <div class="field-row">
+                <div class="field-label">२३) आई, वडील किंवा पालक यांविषयी अन्य सविस्तर माहिती :</div>
+            </div>
+            <textarea class="long-textarea" style="height: 200px;" name="parents_other_info"></textarea>
+        </div>
+
+
+        <div class="signature-box">
+            <div class="signature-item">
+                <div class="field-label">स्वाक्षरी / अंगठा (विद्यार्थी) :</div>
+                <div class="signature-line">
+                    <img id="student-signature-preview" class="signature-preview" src="" style="display:none;">
+                </div>
+                <div class="signature-upload-container">
+                    <input type="file" name="student_signature" accept="image/*"
+                        onchange="previewImage(event, 'student-signature-preview', null)">
+                </div>
+            </div>
+        </div>
+
+        <div class="signature-box" style="margin-top: 40px;">
+            <div class="signature-item" style="text-align: left;">
+                <div class="field-row">
+                    <div class="field-label">दि :</div>
+                    <input type="date" class="input-line small-line">
+                </div>
+            </div>
+            <div class="signature-item">
+                <div class="signature-line">
+                    <img id="parent-signature-preview" class="signature-preview" src="" style="display:none;">
+                </div>
+                <div class="signature-upload-container">
+                    <input type="file" name="parent_signature" accept="image/*"
+                        onchange="previewImage(event, 'parent-signature-preview', null)">
+                </div>
+                पालक
+            </div>
+            <div class="signature-item">
+                <div class="signature-line">
+                    <img id="mother-signature-preview" class="signature-preview" src="" style="display:none;">
+                </div>
+                <div class="signature-upload-container">
+                    <input type="file" name="mother_signature" accept="image/*"
+                        onchange="previewImage(event, 'mother-signature-preview', null)">
+                </div>
+                आई
+            </div>
+            <div class="signature-item">
+                <div class="signature-line">
+                    <img id="father-signature-preview" class="signature-preview" src="" style="display:none;">
+                </div>
+                <div class="signature-upload-container">
+                    <input type="file" name="father_signature" accept="image/*"
+                        onchange="previewImage(event, 'father-signature-preview', null)">
+                </div>
+                वडील
+            </div>
+        </div>
+
+        <div class="signature-box" style="margin-top: 20px;">
+            <div class="signature-item" style="text-align: left; width: 30%;">
+                <div class="field-row">
+                    <div class="field-label">अर्ज तयार करणार :</div>
+                </div>
+                <div class="field-row">
+                    <div class="field-label">नाव :</div>
+                    <input type="text" class="input-line" name="preparer_name">
+                </div>
+                <div class="field-row">
+                    <div class="field-label">स्वाक्षरी :</div>
+                    <div class="signature-line"
+                        style="width:100px; border-top: 1px dashed #000; display: inline-block;">
+                        <img id="preparer-signature-preview" class="signature-preview" src="" style="display:none;">
+                    </div>
+                    <div class="signature-upload-container" style="margin-top: 0;">
+                        <input type="file" name="preparer_signature" accept="image/*"
+                            onchange="previewImage(event, 'preparer-signature-preview', null)" style="width: 200%;">
+                    </div>
+                </div>
+            </div>
+            <div class="signature-item" style="width: 60%;">
+            </div>
+        </div>
+
+        </div>
+        <button type="submit"
+            style="width: 100px; margin-top:20px; padding: 5px; cursor: pointer; border-radius: 10px;">Submit</button>
+        <div style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap;">
+            <button type="button" onclick="window.print()"
+                style="padding:6px 15px; cursor:pointer; border-radius:10px;">
+                Print
+            </button>
+        </div>
+    </form>
+</body>
+
+</html>
